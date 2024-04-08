@@ -40,4 +40,4 @@ jobs:
       - name: Init Terraform
         working-directory: .
         run: |
-         terraform plan
+         terraform apply
