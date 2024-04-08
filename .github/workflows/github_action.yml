@@ -25,8 +25,8 @@ jobs:
       - name: Set Environment Variables
         working-directory: .
         run: |
-              echo AWS_REGION=$(cat params.json | jq -r '.aws_region') >> $GITHUB_ENV
-              export AWS_ACCOUNT_ID=$(cat params.json | jq -r '.aws_account_id')
+              echo AWS_REGION="eu-central-1" >> $GITHUB_ENV
+              export AWS_ACCOUNT_ID="742500315313"
               echo AWS_ROLE="arn:aws:iam::742500315313:role/github-oidc-role" >> $GITHUB_ENV
       - name: Display AWS Environment Variables
         run: |
@@ -41,9 +41,9 @@ jobs:
       - name: Print assumed role
         run: aws sts get-caller-identity
       - name: Init Terraform
-        working-directory: /environments/test
+        working-directory: ./environments/test
         run: terragrunt init 
       - name: apply Terraform
-        working-directory: /environments/test
+        working-directory: ./environments/test
         run: |
          terragrunt plan
