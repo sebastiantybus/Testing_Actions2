@@ -41,9 +41,9 @@ jobs:
       - name: Print assumed role
         run: aws sts get-caller-identity
       - name: Init Terraform
-        working-directory: ./environments/test
+        working-directory: /environments/test
         run: terragrunt init 
       - name: apply Terraform
-        working-directory: ./environments/test
+        working-directory: /environments/test
         run: |
          terragrunt plan
