@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "example" {
-  bucket = "sebastians-oidc-test"
+  bucket = var.bucket_name
 
   tags = {
     Name        = "OIDC Test Bucket"

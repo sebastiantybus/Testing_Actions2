@@ -16,6 +16,12 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.7.5
+      - name: Install Terragrunt
+        run: |
+            wget -q -O /tmp/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.30.0/terragrunt_linux_amd64
+            chmod +x /tmp/terragrunt
+            sudo mv /tmp/terragrunt /usr/local/bin/terragrunt
+            terragrunt --version  # Verify installation
       - name: Set Environment Variables
         working-directory: .
         run: |
@@ -35,9 +41,9 @@ jobs:
       - name: Print assumed role
         run: aws sts get-caller-identity
       - name: Init Terraform
-        working-directory: .
-        run: terraform init 
+        working-directory: /environments/test
+        run: terragrunt init 
       - name: apply Terraform
-        working-directory: .
+        working-directory: /environments/test
         run: |
-         terraform apply -auto-approve
+         terragrunt plan
