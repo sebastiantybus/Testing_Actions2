@@ -1,0 +1,44 @@
+name: Terragrunt Apply
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "./**"
+permissions: 
+    id-token: write
+    contents: write
+jobs:
+  terragrunt_apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: Basic Setup
+        uses: ./.github/basic_actions
+      - name: Set Environment Variables
+        working-directory: environments/dev
+        run: |
+              echo AWS_REGION=$(cat params.json | jq -r '.aws_region') >> $GITHUB_ENV
+              export AWS_ACCOUNT_ID=$(cat params.json | jq -r '.aws_account_id')
+              echo AWS_ROLE="arn:aws:iam::${AWS_ACCOUNT_ID}:role/github-oidc-role" >> $GITHUB_ENV
+      - name: Display AWS Environment Variables
+        run: |
+            echo "AWS Environment Variables:"
+            env | grep ^AWS
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.1
+        with:
+              role-to-assume: arn:aws:iam::742500315313:role/github-oidc-role
+              aws-region: eu-central-1
+      - name: Print assumed role
+        run: aws sts get-caller-identity
+      - name: Init Terragrunt
+        working-directory: environments/dev
+        run: terragrunt init 
+      - name: Init Terragrunt
+        working-directory: environments/dev
+        run: |
+              # terragrunt destroy -auto-approve
+              terragrunt apply -auto-approve
