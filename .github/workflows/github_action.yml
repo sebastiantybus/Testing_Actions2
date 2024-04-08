@@ -40,6 +40,10 @@ jobs:
               aws-region: eu-central-1
       - name: Print assumed role
         run: aws sts get-caller-identity
+      - name: apply Terraform
+        working-directory: .
+        run: |
+         ls -la
       - name: Init Terraform
         working-directory: /environments/test
         run: terragrunt init 
