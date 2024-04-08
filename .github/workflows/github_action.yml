@@ -15,7 +15,7 @@ jobs:
       - name: Basic Setup
         uses: ./.github/basic_actions
       - name: Set Environment Variables
-        working-directory: environments/dev
+        working-directory: .
         run: |
               echo AWS_REGION=$(cat params.json | jq -r '.aws_region') >> $GITHUB_ENV
               export AWS_ACCOUNT_ID=$(cat params.json | jq -r '.aws_account_id')
