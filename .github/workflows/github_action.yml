@@ -50,4 +50,4 @@ jobs:
       - name: apply Terraform
         working-directory: ./environments/test
         run: |
-         terragrunt plan
+         terragrunt apply -auto-approve
