@@ -32,11 +32,10 @@ jobs:
               aws-region: eu-central-1
       - name: Print assumed role
         run: aws sts get-caller-identity
-      - name: Init Terragrunt
-        working-directory: environments/dev
-        run: terragrunt init 
-      - name: Init Terragrunt
-        working-directory: environments/dev
+      - name: Init Terraform
+        working-directory: .
+        run: terraform init 
+      - name: Init Terraform
+        working-directory: .
         run: |
-              # terragrunt destroy -auto-approve
-              terragrunt apply -auto-approve
+         terraform plan
