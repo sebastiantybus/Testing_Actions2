@@ -27,7 +27,7 @@ jobs:
         run: |
               echo AWS_REGION="eu-central-1" >> $GITHUB_ENV
               export AWS_ACCOUNT_ID="742500315313"
-              echo AWS_ROLE="arn:aws:iam::767398139787:role/github-oidc-role" >> $GITHUB_ENV
+              echo AWS_ROLE="arn:aws:iam::742500315313:role/github-oidc-role" >> $GITHUB_ENV
       - name: Display AWS Environment Variables
         run: |
             echo "AWS Environment Variables:"
@@ -36,7 +36,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4.0.1
         with:
-              role-to-assume: arn:aws:iam::767398139787:role/github-oidc-role
+              role-to-assume: arn:aws:iam::742500315313:role/github-oidc-role
               aws-region: eu-central-1
       - name: Print assumed role
         run: aws sts get-caller-identity
